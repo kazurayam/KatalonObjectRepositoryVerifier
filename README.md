@@ -37,11 +37,11 @@ The verification criteria is implemented as a set of Strings as XPath expression
 
 ### `Test Cases/ObjectRepositoryTransformer`
 
-[This Groovy script](https://github.com/kazurayam/KatalonObjectRepositoryVerifier/blob/master/Scripts/ObjectRepositoryVerifier/Script1532075796937.groovy) is designed to meet the following need:
+[This Groovy script](https://github.com/kazurayam/KatalonObjectRepositoryVerifier/blob/master/Scripts/ObjectRepositoryTransformation/Script1532125592182.groovy) is designed to meet the following need:
 
 >I want to rewrite the *rs files in the `Object Repository` directory. The *rs files are in XML format, these are the definition of my Test Objects. I want a tool which transforms mass of *.rs files for me. The resulting Test Objects should have `tag` selector and `class` selector retained, and other types of selectors erased. I want to create a temporary directory in the Katalon project, so that I find all resulting Test Objects are saved there. I do not want the tool change the original 'Object Repository'.
 
-[This Groovy script](https://github.com/kazurayam/KatalonObjectRepositoryVerifier/blob/master/Scripts/ObjectRepositoryVerifier/Script1532075796937.groovy) employs the XSLT technology bundled in the JDK as `javax.xml.transform.Trasformer` and other classes.
+[This Groovy script](https://github.com/kazurayam/KatalonObjectRepositoryVerifier/blob/master/Scripts/ObjectRepositoryTransformation/Script1532125592182.groovy) employs the XSLT technology bundled in the JDK as `javax.xml.transform.Trasformer` and other classes.
 
 The transformation is implemented as a XSLT stylesheet. By modifying the stylesheet, you can customize the way how the *.rs files are transformed.
 

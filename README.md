@@ -1,4 +1,4 @@
-Katalon Studio Object Repository Verifier and Transformer
+Object Repository Verifier / Transformer for Katalon Studio
 ===============
 
 ## What is this?
@@ -26,14 +26,37 @@ This project includes 2 test cases.
 
 ### `Test Cases/ObjectRepositoryVerifier`
 
+This Groovy script is designed to meet the following need:
+
+>I want all of my Test Objects to have `tag` selector and `class` selector defined, and these 2 selectors `selected`. How can I check this? I have too many. I want a tool which tells me which Test Objects are missing `tag` and `class` selectors.
+
+
 This Groovy script employs the XPath technology bundled in the JDK as `javax.xml.xpath.XPath` and other classes.
 
+The verification criteria is implemented as a set of Strings as XPath expression in the Groovy script. You can customize the verification criteria by modifying the expressions.
 
 ### `Test Cases/ObjectRepositoryTransformer`
 
+This Groovy script is designed to meet the following need:
+
+>I want to rewrite the *rs files. The *rs.files are in XML format, these are the definition of my Test Objects. I want a tool which transforms *.rs files for me. The resulting Test Objects should have `tag` selector and `class` selector retained, and other types of selectors erased. I want to create a temporary directory in the Katalon project, so that I find all resulting Test Objects are saved there while leaving the original 'Object Repository' unchanged.
+
 This Groovy script employs the XSLT technology bundled in the JDK as `javax.xml.transform.Trasformer` and other classes.
 
+The transformation is implemented as a XSLT stylesheet. You can customize the stylesheet so that you can transform the *.rs files as you require.
 
 ## How to run the demo
+
+1. clone this project out of GitHub
+2. open the project using your Katalon Studio (>5.4)
+3. select `Test Cases/ObjectRepositoryVerifier` and run it
+4. check the log to see the verification result
+
+and
+
+1. select `Test Cases/ObjectRepositoryTransformer` and run it
+2. a new directory `transformed_Object_Repository` will be created in the project home directory.
+3. please find the transformed *.rs files
+4. If you want to copy the transformed Test Object to the source `Object Repository`, you need to do it manually, one by one.
 
 writer: kazurayam

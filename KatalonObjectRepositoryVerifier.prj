@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
-   <description></description>
+   <description>see https://forum.katalon.com/discussion/8454/is-there-a-way-to-mass-edit-many-objects-in-the-object-repository 
+</description>
    <name>KatalonObjectRepositoryVerifier</name>
    <tag></tag>
    <UUID>ac052791-b626-42ba-95c4-4d08af90f776</UUID>

@@ -15,6 +15,12 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 import com.kms.katalon.core.logging.KeywordLogger
 import com.kms.katalon.core.util.KeywordUtil
 
+/**
+ * see https://forum.katalon.com/discussion/8454/is-there-a-way-to-mass-edit-many-objects-in-the-object-repository
+ * 
+ * @author kazurayam
+ *
+ */
 
 KeywordLogger logger = new KeywordLogger()
 

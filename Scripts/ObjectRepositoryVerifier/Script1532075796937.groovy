@@ -17,20 +17,22 @@ import com.kms.katalon.core.util.KeywordUtil
 
 /**
  * see https://forum.katalon.com/discussion/8454/is-there-a-way-to-mass-edit-many-objects-in-the-object-repository
- * 
+ *
  * @author kazurayam
  *
  */
+
+// You can modify these XPath expressions to customize verification criteria
+List<String> expressions = [
+	'/WebElementEntity/webElementProperties[name="tag" and isSelected="true"]',
+	'/WebElementEntity/webElementProperties[name="class" and isSelected="true"]'
+]
+
 
 KeywordLogger logger = new KeywordLogger()
 
 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance()
 XPath xpath = XPathFactory.newInstance().newXPath()
-
-List<String> expressions = [
-	'/WebElementEntity/webElementProperties[name="tag" and isSelected="true"]',
-	'/WebElementEntity/webElementProperties[name="class" and isSelected="true"]'
-]
 
 Path objectRepository = Paths.get('Object Repository')
 List<Path> rsFiles = Files.walk(objectRepository)
@@ -49,7 +51,7 @@ for (Path p : rsFiles) {
 			Boolean result = (Boolean)xpath.evaluate(expr, doc, XPathConstants.BOOLEAN)
 			if (!result) {
 				logger.logFailed("FAILURE ${p} against XPath \"${expr}\"")
-				failureCount += 1	
+				failureCount += 1
 			}
 		}
 	}

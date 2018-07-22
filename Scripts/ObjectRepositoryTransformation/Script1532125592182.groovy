@@ -24,7 +24,7 @@ import com.kms.katalon.core.webui.keyword.WebUiBuiltInKeywords as WebUI
 
 /**
  * see https://forum.katalon.com/discussion/8454/is-there-a-way-to-mass-edit-many-objects-in-the-object-repository
- * 
+ *
  * @author kazurayam
  *
  */
@@ -47,31 +47,30 @@ WebUI.comment("created a directory ${resultOR}")
 // instanciate Factories of XML/XSLT processing tools
 DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance()
 XPath xpath = XPathFactory.newInstance().newXPath()
+
+// create XSLT processors
 TransformerFactory tFactory = TransformerFactory.newInstance()
+Transformer identityTransformer = tFactory.newTransformer(createIdentityTransformSource())
+Transformer testObjectTransformer = tFactory.newTransformer(createTestObjectTransformSource())
 
 def failureCount = 0
 
 // now process XML files
 for (Path p : rsFiles) {
-	
-	// create XSLT processors
-	Transformer identityTransformer = tFactory.newTransformer(createIdentityTransformSource())
-	Transformer testObjectTransformer = tFactory.newTransformer(createTestObjectTransformSource())
-
 
 	// subpath under 'Object Repository' dir, e.g., 'Page_CURA Healthcare Service/a_Go to Homepage'
 	Path subpath = sourceOR.relativize(p)
 	//println "subpath='${subpath}'"
-	
+
 	// read input XML to instanciate a DOM
 	DocumentBuilder db = dbf.newDocumentBuilder()
 	Document doc = db.parse(p.toFile())
 	String name = (String)xpath.evaluate("/WebElementEntity/name", doc, XPathConstants.STRING)
 	println "processing '${name}' in '${p}'"
-	
+
 	// prepare input source
 	Source source = new DOMSource(doc)
-	
+
 	// check if the Test Object uses BASIC selector
 	Boolean isBasic = (Boolean)xpath.evaluate('/WebElementEntity/selectorMethod[. = "BASIC"]', doc, XPathConstants.BOOLEAN)
 	if (isBasic) {
@@ -98,9 +97,9 @@ if (failureCount > 0) {
 
 
 /**
- * This method returns a StreamSource instance which wraps a XSLT stylesheet for 
+ * This method returns a StreamSource instance which wraps a XSLT stylesheet for
  * identity-transform : copy a input XML document to output with no modification
- * 
+ *
  * @return javax.xml.transform.StreamSource
  */
 StreamSource createIdentityTransformSource() {
@@ -121,15 +120,16 @@ StreamSource createIdentityTransformSource() {
  * This method returns a StreamSource instance which wraps a XSLT stylesheet.
  * The stylesheet is designed to transform a *.rs file stored in the Katalon Studio's Object Repository directory.
  * A *.rs file is the definition of a Test Object.
- * 
+ *
  * The stylesheet transforms a XML <WebElementEntity> document to a slightly reduced format.
  * It looks at nodes of xpath:'/WebElementEntity/webElementProperties'.
  * It copies a node that matches xpath '/WebElementEntity/webElementProperties[name='tag' or name='class'] and
- * it discards other webElementProperties nodes. 
+ * it discards other webElementProperties nodes.
  */
 StreamSource createTestObjectTransformSource() {
 	def stylesheet = '''<?xml version="1.0" encoding="utf-8" ?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:output method="xml" indent="yes"/>
 
     <xsl:template match="WebElementEntity">
       <xsl:copy>
@@ -152,13 +152,15 @@ StreamSource createTestObjectTransformSource() {
           </xsl:when>
           -->
           <xsl:when test="name='tag' or name='class'">
-			  <xsl:copy-of select="." />
+              <xsl:copy-of select="." />
           </xsl:when>
           <xsl:otherwise>
               <!-- discard other webElementProperites nodes -->
           </xsl:otherwise>
       </xsl:choose>
   </xsl:template>
+
+  
 
   <xsl:template match="@*|node()">
     <xsl:copy>
